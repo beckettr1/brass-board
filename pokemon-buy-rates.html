@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>We Buy Pokémon – Brass & Board</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --yellow: #FFCB05;
+    --blue: #3B4CCA;
+    --navy: #1a1a2e;
+    --red: #CC0000;
+    --white: #ffffff;
+    --gray: #f4f4f4;
+    --text: #1a1a2e;
+    --muted: #666;
+    --radius: 12px;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--yellow);
+    padding: 2.5rem 1.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    border: 40px solid rgba(0,0,0,0.06);
+    top: -80px;
+    right: -60px;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    border: 24px solid rgba(0,0,0,0.05);
+    bottom: -40px;
+    left: -30px;
+  }
+
+  .store-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--blue);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(3rem, 12vw, 4.5rem);
+    font-weight: 900;
+    line-height: 0.95;
+    color: var(--navy);
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero h1 span {
+    display: block;
+    color: var(--blue);
+  }
+
+  .hero-sub {
+    margin-top: 1rem;
+    font-size: 14px;
+    color: rgba(26,26,46,0.65);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* CONTENT WRAPPER */
+  .content {
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 1.5rem 1.25rem 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  /* INTRO CARD */
+  .intro-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--text);
+    border-left: 4px solid var(--yellow);
+  }
+
+  .intro-card p + p { margin-top: 0.5rem; }
+
+  /* SECTION */
+  .section {
+    background: var(--white);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .section-header {
+    background: var(--blue);
+    padding: 0.75rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .section-header h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--white);
+  }
+
+  .section-header .badge {
+    background: var(--yellow);
+    color: var(--navy);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-left: auto;
+  }
+
+  .rate-table { width: 100%; }
+
+  .rate-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.7rem 1.25rem;
+    border-bottom: 1px solid #f0f0f0;
+    gap: 1rem;
+  }
+
+  .rate-row:last-child { border-bottom: none; }
+
+  .rate-row:nth-child(even) { background: #fafafa; }
+
+  .rate-label {
+    font-size: 14px;
+    color: var(--text);
+  }
+
+  .rate-value {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--blue);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .rate-value.highlight {
+    color: var(--red);
+  }
+
+  /* CONDITION TABLE */
+  .condition-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .condition-cell {
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid #f0f0f0;
+    border-right: 1px solid #f0f0f0;
+  }
+
+  .condition-cell:nth-child(even) { border-right: none; }
+  .condition-cell:nth-last-child(-n+2) { border-bottom: none; }
+
+  .condition-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+
+  .condition-rate {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--blue);
+  }
+
+  .condition-note {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 1px;
+  }
+
+  /* JAPANESE SECTION */
+  .japanese-header {
+    background: var(--red);
+  }
+
+  /* POLICY NOTE */
+  .policy {
+    background: rgba(255,255,255,0.06);
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.6;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .policy strong { color: var(--yellow); font-weight: 600; }
+
+  /* CONTACT */
+  .contact-card {
+    background: var(--yellow);
+    border-radius: var(--radius);
+    padding: 1.5rem 1.5rem;
+    text-align: center;
+  }
+
+  .contact-card h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--navy);
+    margin-bottom: 0.4rem;
+  }
+
+  .contact-card p {
+    font-size: 14px;
+    color: rgba(26,26,46,0.7);
+    margin-bottom: 1.25rem;
+  }
+
+  .contact-link {
+    display: block;
+    background: var(--navy);
+    color: var(--yellow);
+    text-decoration: none;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 0.5rem;
+    transition: opacity 0.15s;
+  }
+
+  .contact-link:hover { opacity: 0.85; }
+  .contact-link span { opacity: 0.6; font-weight: 400; margin-right: 6px; }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    padding: 0 1.25rem 2rem;
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="store-name">Brass & Board</div>
+  <h1>We Buy<span>Pokémon!</span></h1>
+  <p class="hero-sub">Cash paid on the spot &bull; No hassle &bull; Fair rates</p>
+</div>
+
+<div class="content">
+
+  <div class="intro-card">
+    <p>Looking to sell your Pokémon cards? We buy singles, collections, and bulk at competitive rates. All prices are based on the <strong>TCGPlayer lowest verified seller</strong>.</p>
+    <p>We are fully transparent with our pricing and will walk you through every card. Reach out any time -- no appointment needed.</p>
+  </div>
+
+  <!-- BULK RATES -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Bulk Rates</h2>
+      <span class="badge">Near Mint · Unsleeved</span>
+    </div>
+    <div class="rate-table">
+      <div class="rate-row">
+        <span class="rate-label">Commons &amp; Uncommons</span>
+        <span class="rate-value">$12 / 1,000</span>
+      </div>
+      <div class="rate-row">
+        <span class="rate-label">Reverse Holo &amp; Holo Rare Bulk</span>
+        <span class="rate-value">$22 / 1,000</span>
+      </div>
+      <div class="rate-row">
+        <span class="rate-label">ex / V / Full Art Bulk</span>
+        <span class="rate-value">$0.30 each</span>
+      </div>
+      <div class="rate-row">
+        <span class="rate-label">Singles $1.00 – $2.00</span>
+        <span class="rate-value">$0.50 each</span>
+      </div>
+      <div class="rate-row">
+        <span class="rate-label">Singles $2.00 – $3.00</span>
+        <span class="rate-value">$1.00 each</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SINGLES RATES -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Singles Buy Rates</h2>
+      <span class="badge">% of TCGPlayer Low</span>
+    </div>
+    <div class="rate-table">
+      <div class="rate-row">
+        <span class="rate-label">$3.00 – $5.00</span>
+        <span class="rate-value">50%</span>
+      </div>
+      <div class="rate-row">
+        <span class="rate-label">$5.00 – $20.00</span>
+        <span class="rate-value">65%</span>
+      </div>
+      <div class="rate-row">
+        <span class="rate-label">$20.00 – $100.00</span>
+        <span class="rate-value">70%</span>
+      </div>
+      <div class="rate-row">
+        <span class="rate-label">$100.00+</span>
+        <span class="rate-value highlight">80%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAPANESE -->
+  <div class="section">
+    <div class="section-header japanese-header">
+      <h2>Japanese Pokémon</h2>
+    </div>
+    <div class="rate-table">
+      <div class="rate-row">
+        <span class="rate-label">All Japanese singles</span>
+        <span class="rate-value">60%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONDITION -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Condition Guide</h2>
+    </div>
+    <div class="condition-grid">
+      <div class="condition-cell">
+        <div class="condition-name">Near Mint</div>
+        <div class="condition-rate">Full rate</div>
+        <div class="condition-note">No visible wear</div>
+      </div>
+      <div class="condition-cell">
+        <div class="condition-name">Lightly Played</div>
+        <div class="condition-rate">80% of rate</div>
+        <div class="condition-note">Minor surface wear</div>
+      </div>
+      <div class="condition-cell">
+        <div class="condition-name">Moderately Played</div>
+        <div class="condition-rate">50% of rate</div>
+        <div class="condition-note">Visible wear/creases</div>
+      </div>
+      <div class="condition-cell">
+        <div class="condition-name">Heavily Played</div>
+        <div class="condition-rate">Case by case</div>
+        <div class="condition-note">Reach out first</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="policy">
+    <strong>Please note:</strong> Bulk cards must be near mint and unsleeved. We verify authenticity on all cards and reserve the right to decline any purchase. Rates are subject to change -- the rates listed here are current as of the date you received this card.
+  </div>
+
+  <!-- CONTACT -->
+  <div class="contact-card">
+    <h2>Ready to sell?</h2>
+    <p>Reach out however works best for you.</p>
+    <a href="https://www.tcgplayer.com/store/brass-and-board" class="contact-link"><span>Shop</span>TCGPlayer Store</a>
+    <a href="mailto:your@email.com" class="contact-link"><span>Email</span>your@email.com</a>
+  </div>
+
+</div>
+
+<div class="footer">Brass & Board &bull; All prices based on TCGPlayer lowest verified seller</div>
+
+</body>
+</html>
