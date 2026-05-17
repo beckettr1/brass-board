@@ -27,6 +27,45 @@
     min-height: 100vh;
   }
 
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(26,26,46,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    padding: 0 1.5rem;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: var(--yellow);
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .nav-links a:hover { color: #fff; }
+  .nav-links a.active { color: var(--yellow); }
+  @media (max-width: 500px) { .nav-links { display: none; } }
+
   /* HERO */
   .hero {
     background: var(--yellow);
@@ -286,6 +325,16 @@
 </style>
 </head>
 <body>
+
+<nav>
+  <a class="nav-logo" href="index.html">Brass & Board</a>
+  <ul class="nav-links">
+    <li><a href="index.html#games">Games</a></li>
+    <li><a href="index.html#buy" class="active">Buy Rates</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+</nav>
 
 <div class="hero">
   <div class="store-name">Brass & Board</div>
