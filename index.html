@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brass & Board – Trading Card Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;900&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --yellow: #FFCB05;
+    --blue: #3B4CCA;
+    --navy: #1a1a2e;
+    --navy-mid: #22223d;
+    --red: #CC0000;
+    --white: #ffffff;
+    --muted: rgba(255,255,255,0.5);
+    --radius: 12px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(26,26,46,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    padding: 0 1.5rem;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: var(--yellow);
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .nav-links a:hover { color: var(--white); }
+
+  /* HERO */
+  .hero {
+    min-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 0%, rgba(59,76,202,0.25) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 80% 80%, rgba(255,203,5,0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 1.25rem;
+    position: relative;
+  }
+
+  .hero h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(3.5rem, 14vw, 8rem);
+    font-weight: 900;
+    line-height: 0.9;
+    text-transform: uppercase;
+    position: relative;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 .line1 { display: block; color: var(--white); }
+  .hero h1 .line2 { display: block; color: var(--yellow); }
+
+  .hero-sub {
+    font-size: clamp(15px, 2.5vw, 18px);
+    color: var(--muted);
+    max-width: 480px;
+    line-height: 1.6;
+    position: relative;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 0.8rem 1.75rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    transition: transform 0.15s, opacity 0.15s;
+    cursor: pointer;
+  }
+
+  .btn:hover { transform: translateY(-1px); opacity: 0.9; }
+
+  .btn-primary { background: var(--yellow); color: var(--navy); }
+  .btn-secondary { background: rgba(255,255,255,0.08); color: var(--white); border: 1px solid rgba(255,255,255,0.15); }
+
+  /* SECTION SHARED */
+  section { padding: 5rem 1.5rem; }
+
+  .section-inner { max-width: 900px; margin: 0 auto; }
+
+  .section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .section-body {
+    font-size: 15px;
+    color: var(--muted);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+  }
+
+  /* GAMES GRID */
+  .games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+  }
+
+  .game-card {
+    background: var(--navy-mid);
+    border-radius: var(--radius);
+    padding: 2rem 1.75rem;
+    border: 1px solid rgba(255,255,255,0.07);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .game-card:hover { border-color: rgba(255,255,255,0.15); }
+
+  .game-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .game-card.pokemon::before { background: var(--yellow); }
+  .game-card.magic::before { background: var(--blue); }
+  .game-card.coming::before { background: rgba(255,255,255,0.15); }
+
+  .game-icon {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .game-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .game-card.coming .game-name { color: rgba(255,255,255,0.3); }
+
+  .game-desc {
+    font-size: 13.5px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+  }
+
+  .game-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+
+  .tag {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .tag-buy { background: rgba(255,203,5,0.15); color: var(--yellow); }
+  .tag-sell { background: rgba(59,76,202,0.2); color: #8fa0ff; }
+  .tag-soon { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.3); }
+
+  /* BUY RATES */
+  .rates-section { background: var(--navy-mid); }
+
+  .rates-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+  }
+
+  .rate-card {
+    background: var(--navy);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    border: 1px solid rgba(255,255,255,0.07);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .rate-card-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+
+  .rate-card.pokemon .rate-card-title { color: var(--yellow); }
+  .rate-card.magic .rate-card-title { color: #8fa0ff; }
+
+  .rate-card-desc {
+    font-size: 13.5px;
+    color: var(--muted);
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .rate-highlights { display: flex; flex-direction: column; gap: 6px; }
+
+  .rate-highlight-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .rate-highlight-row:last-child { border-bottom: none; }
+  .rhl { color: var(--muted); }
+  .rhv { font-weight: 600; color: var(--white); }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  @media (max-width: 640px) {
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+  }
+
+  .about-text .section-body { margin-bottom: 0; }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .stat-box {
+    background: var(--navy-mid);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    border: 1px solid rgba(255,255,255,0.07);
+    text-align: center;
+  }
+
+  .stat-number {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--yellow);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* CONTACT */
+  .contact-section {
+    background: var(--yellow);
+    padding: 5rem 1.5rem;
+  }
+
+  .contact-section .section-label { color: rgba(26,26,46,0.5); }
+  .contact-section .section-title { color: var(--navy); }
+  .contact-section .section-body { color: rgba(26,26,46,0.6); }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    max-width: 400px;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--navy);
+    color: var(--white);
+    text-decoration: none;
+    padding: 0.9rem 1.25rem;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: opacity 0.15s;
+  }
+
+  .contact-link:hover { opacity: 0.85; }
+
+  .contact-link-icon {
+    width: 32px;
+    height: 32px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  .contact-link-label { color: rgba(255,255,255,0.5); font-size: 12px; }
+  .contact-link-value { color: var(--white); font-weight: 600; }
+
+  /* FOOTER */
+  footer {
+    background: #13131f;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    font-size: 13px;
+    color: rgba(255,255,255,0.2);
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  footer a { color: rgba(255,255,255,0.35); text-decoration: none; }
+  footer a:hover { color: var(--yellow); }
+
+  /* DIVIDER */
+  .divider {
+    width: 40px;
+    height: 3px;
+    background: var(--yellow);
+    margin-bottom: 1.5rem;
+    border-radius: 2px;
+  }
+
+  @media (max-width: 500px) {
+    nav .nav-links { display: none; }
+    .hero-ctas { flex-direction: column; align-items: center; }
+    .btn { width: 100%; text-align: center; max-width: 280px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">Brass & Board</a>
+  <ul class="nav-links">
+    <li><a href="#games">Games</a></li>
+    <li><a href="#buy">Buy Rates</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <p class="hero-eyebrow">Trading Card Store</p>
+  <h1>
+    <span class="line1">Brass</span>
+    <span class="line2">&amp; Board</span>
+  </h1>
+  <p class="hero-sub">We buy and sell Magic: The Gathering and Pokémon singles, collections, and bulk. Fair prices, fast transactions.</p>
+  <div class="hero-ctas">
+    <a href="https://www.tcgplayer.com/search/all/product?seller=8251fbab&view=grid" class="btn btn-primary">Shop on TCGPlayer</a>
+    <a href="#buy" class="btn btn-secondary">We Buy Cards</a>
+  </div>
+</section>
+
+<!-- GAMES -->
+<section id="games">
+  <div class="section-inner">
+    <p class="section-label">What We Carry</p>
+    <h2 class="section-title">Games We Buy &amp; Sell</h2>
+    <p class="section-body">We specialize in the games we know best. More coming soon.</p>
+    <div class="games-grid">
+      <div class="game-card pokemon">
+        <div class="game-icon">⚡</div>
+        <div class="game-name">Pokémon TCG</div>
+        <p class="game-desc">Singles, collections, bulk, Japanese cards, and sealed product. We know the market and pay competitively.</p>
+        <div class="game-tags">
+          <span class="tag tag-buy">We Buy</span>
+          <span class="tag tag-sell">We Sell</span>
+        </div>
+      </div>
+      <div class="game-card magic">
+        <div class="game-icon">🔮</div>
+        <div class="game-name">Magic: The Gathering</div>
+        <p class="game-desc">From bulk commons to Commander staples and reserved list cards. All sets, all formats.</p>
+        <div class="game-tags">
+          <span class="tag tag-buy">We Buy</span>
+          <span class="tag tag-sell">We Sell</span>
+        </div>
+      </div>
+      <div class="game-card coming">
+        <div class="game-icon">🃏</div>
+        <div class="game-name">More Coming Soon</div>
+        <p class="game-desc">Expanding to more games as we grow. Check back or reach out if you have something to sell.</p>
+        <div class="game-tags">
+          <span class="tag tag-soon">Coming Soon</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BUY RATES -->
+<section id="buy" class="rates-section">
+  <div class="section-inner">
+    <p class="section-label">Selling Your Cards?</p>
+    <h2 class="section-title">We Pay Cash</h2>
+    <p class="section-body">All prices based on TCGPlayer lowest verified seller. Transparent rates, no lowballing.</p>
+    <div class="rates-grid">
+      <div class="rate-card pokemon">
+        <div class="rate-card-title">Pokémon</div>
+        <p class="rate-card-desc">Bulk, singles, Japanese cards, and collections. We pay top dollar for high-value cards.</p>
+        <div class="rate-highlights">
+          <div class="rate-highlight-row"><span class="rhl">Commons / Uncommons</span><span class="rhv">$12 / 1,000</span></div>
+          <div class="rate-highlight-row"><span class="rhl">Singles $5 – $20</span><span class="rhv">65%</span></div>
+          <div class="rate-highlight-row"><span class="rhl">Singles $20 – $100</span><span class="rhv">70%</span></div>
+          <div class="rate-highlight-row"><span class="rhl">Singles $100+</span><span class="rhv">80%</span></div>
+        </div>
+        <a href="pokemon-buy-rates.html" class="btn btn-primary" style="text-align:center;">Full Pokémon Rates</a>
+      </div>
+      <div class="rate-card magic">
+        <div class="rate-card-title">Magic</div>
+        <p class="rate-card-desc">All formats, all sets. Bulk rares, Commander staples, and high-end singles welcome.</p>
+        <div class="rate-highlights">
+          <div class="rate-highlight-row"><span class="rhl">Commons / Uncommons</span><span class="rhv">Coming soon</span></div>
+          <div class="rate-highlight-row"><span class="rhl">Singles $5 – $20</span><span class="rhv">Coming soon</span></div>
+          <div class="rate-highlight-row"><span class="rhl">Singles $20+</span><span class="rhv">Coming soon</span></div>
+        </div>
+        <a href="#contact" class="btn btn-secondary" style="text-align:center;">Reach Out to Sell</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-text">
+        <p class="section-label">About</p>
+        <div class="divider"></div>
+        <h2 class="section-title">A Store Built by Players</h2>
+        <p class="section-body">Brass & Board is an independent trading card store focused on Magic: The Gathering and Pokémon. We're not a big box store -- we're players who know the market and treat every transaction fairly. Whether you're buying singles for your next deck or selling off a collection, we'll give you an honest deal.</p>
+      </div>
+      <div class="about-stats">
+        <div class="stat-box">
+          <div class="stat-number">MTG</div>
+          <div class="stat-label">Magic Singles</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">PKM</div>
+          <div class="stat-label">Pokémon Singles</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Transparent Pricing</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">Fast</div>
+          <div class="stat-label">Shipping & Payment</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+  <div class="section-inner">
+    <p class="section-label">Get In Touch</p>
+    <h2 class="section-title">Let's Talk Cards</h2>
+    <p class="section-body">Looking to sell a collection, ask about a card, or just say hi? Reach out however works best for you.</p>
+    <div class="contact-links">
+      <a href="https://www.tcgplayer.com/search/all/product?seller=8251fbab&view=grid" class="contact-link">
+        <div class="contact-link-icon">🛒</div>
+        <div>
+          <div class="contact-link-label">Shop</div>
+          <div class="contact-link-value">TCGPlayer Store</div>
+        </div>
+      </a>
+      <a href="mailto:hello@brassandboard.com" class="contact-link">
+        <div class="contact-link-icon">✉️</div>
+        <div>
+          <div class="contact-link-label">Email</div>
+          <div class="contact-link-value">hello@brassandboard.com</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Brass & Board &nbsp;·&nbsp; <a href="https://www.tcgplayer.com/search/all/product?seller=8251fbab&view=grid">TCGPlayer Store</a></p>
+</footer>
+
+</body>
+</html>
