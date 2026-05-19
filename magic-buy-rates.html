@@ -3,19 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>We Buy Pokémon – Brass & Board</title>
+<title>We Buy Magic: The Gathering – Brass & Board</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --yellow: #FFCB05;
+    --gold: #C9913A;
+    --gold-light: #E8B84B;
     --blue: #3B4CCA;
     --navy: #1a1a2e;
+    --purple: #6B3FA0;
     --red: #CC0000;
     --white: #ffffff;
-    --gray: #f4f4f4;
-    --text: #1a1a2e;
     --muted: #666;
     --radius: 12px;
   }
@@ -23,7 +23,7 @@
   body {
     font-family: 'DM Sans', sans-serif;
     background: var(--navy);
-    color: var(--text);
+    color: var(--navy);
     min-height: 100vh;
   }
 
@@ -45,10 +45,15 @@
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 1.3rem;
     font-weight: 900;
-    color: var(--yellow);
+    color: var(--gold);
     letter-spacing: 0.04em;
     text-decoration: none;
     text-transform: uppercase;
+  }
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
   }
   .nav-links {
     display: flex;
@@ -63,17 +68,10 @@
     transition: color 0.15s;
   }
   .nav-links a:hover { color: #fff; }
-  .nav-links a.active { color: var(--yellow); }
-
-  .nav-right {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-  }
-
+  .nav-links a.active { color: var(--gold); }
   .nav-sell {
     display: inline-block;
-    background: var(--yellow);
+    background: var(--gold);
     color: var(--navy) !important;
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 1rem;
@@ -87,9 +85,7 @@
     white-space: nowrap;
     flex-shrink: 0;
   }
-
   .nav-sell:hover { opacity: 0.85; transform: translateY(-1px); }
-
   @media (max-width: 500px) {
     .nav-links { display: none; }
     .nav-sell { font-size: 0.9rem; padding: 0.4rem 0.9rem; }
@@ -97,33 +93,36 @@
 
   /* HERO */
   .hero {
-    background: var(--yellow);
+    background: #111122;
     padding: 2.5rem 1.5rem 2rem;
     position: relative;
     overflow: hidden;
     text-align: center;
+    border-bottom: 3px solid var(--gold);
   }
 
   .hero::before {
     content: '';
     position: absolute;
-    width: 280px;
-    height: 280px;
+    width: 300px;
+    height: 300px;
     border-radius: 50%;
-    border: 40px solid rgba(0,0,0,0.06);
+    background: radial-gradient(circle, rgba(107,63,160,0.2) 0%, transparent 70%);
     top: -80px;
     right: -60px;
+    pointer-events: none;
   }
 
   .hero::after {
     content: '';
     position: absolute;
-    width: 160px;
-    height: 160px;
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
-    border: 24px solid rgba(0,0,0,0.05);
+    background: radial-gradient(circle, rgba(201,145,58,0.15) 0%, transparent 70%);
     bottom: -40px;
     left: -30px;
+    pointer-events: none;
   }
 
   .store-name {
@@ -131,7 +130,7 @@
     font-size: 14px;
     font-weight: 700;
     letter-spacing: 0.2em;
-    color: var(--blue);
+    color: var(--gold);
     text-transform: uppercase;
     margin-bottom: 0.5rem;
     position: relative;
@@ -140,29 +139,27 @@
 
   .hero h1 {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: clamp(3rem, 12vw, 4.5rem);
+    font-size: clamp(2.5rem, 10vw, 4rem);
     font-weight: 900;
     line-height: 0.95;
-    color: var(--navy);
     text-transform: uppercase;
     position: relative;
     z-index: 1;
+    margin-bottom: 1rem;
   }
 
-  .hero h1 span {
-    display: block;
-    color: var(--blue);
-  }
+  .hero h1 .line1 { display: block; color: var(--white); }
+  .hero h1 .line2 { display: block; color: var(--gold); }
+  .hero h1 .line3 { display: block; color: rgba(255,255,255,0.4); font-size: 60%; letter-spacing: 0.1em; margin-top: 0.25rem; }
 
   .hero-sub {
-    margin-top: 1rem;
     font-size: 14px;
-    color: rgba(26,26,46,0.65);
+    color: rgba(255,255,255,0.45);
     position: relative;
     z-index: 1;
   }
 
-  /* CONTENT WRAPPER */
+  /* CONTENT */
   .content {
     max-width: 520px;
     margin: 0 auto;
@@ -172,20 +169,18 @@
     gap: 1.25rem;
   }
 
-  /* INTRO CARD */
   .intro-card {
     background: var(--white);
     border-radius: var(--radius);
     padding: 1.25rem 1.5rem;
     font-size: 14.5px;
     line-height: 1.6;
-    color: var(--text);
-    border-left: 4px solid var(--yellow);
+    color: var(--navy);
+    border-left: 4px solid var(--gold);
   }
 
   .intro-card p + p { margin-top: 0.5rem; }
 
-  /* SECTION */
   .section {
     background: var(--white);
     border-radius: var(--radius);
@@ -193,7 +188,7 @@
   }
 
   .section-header {
-    background: var(--blue);
+    background: #111122;
     padding: 0.75rem 1.25rem;
     display: flex;
     align-items: center;
@@ -210,7 +205,7 @@
   }
 
   .section-header .badge {
-    background: var(--yellow);
+    background: var(--gold);
     color: var(--navy);
     font-size: 11px;
     font-weight: 600;
@@ -218,6 +213,10 @@
     border-radius: 20px;
     margin-left: auto;
   }
+
+  .section-header.gold-header { background: var(--gold); }
+  .section-header.gold-header h2 { color: var(--navy); }
+  .section-header.gold-header .badge { background: var(--navy); color: var(--gold); }
 
   .rate-table { width: 100%; }
 
@@ -231,28 +230,23 @@
   }
 
   .rate-row:last-child { border-bottom: none; }
-
   .rate-row:nth-child(even) { background: #fafafa; }
 
-  .rate-label {
-    font-size: 14px;
-    color: var(--text);
-  }
+  .rate-label { font-size: 14px; color: var(--navy); }
+  .rate-sublabel { font-size: 11px; color: var(--muted); margin-top: 1px; }
 
   .rate-value {
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 1.25rem;
     font-weight: 700;
-    color: var(--blue);
+    color: #111122;
     white-space: nowrap;
     flex-shrink: 0;
   }
 
-  .rate-value.highlight {
-    color: var(--red);
-  }
+  .rate-value.gold { color: var(--gold); }
+  .rate-value.case { color: var(--purple); font-size: 1rem; }
 
-  /* CONDITION TABLE */
   .condition-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -267,32 +261,10 @@
   .condition-cell:nth-child(even) { border-right: none; }
   .condition-cell:nth-last-child(-n+2) { border-bottom: none; }
 
-  .condition-name {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 2px;
-  }
+  .condition-name { font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 2px; }
+  .condition-rate { font-family: 'Barlow Condensed', sans-serif; font-size: 1.1rem; font-weight: 700; color: #111122; }
+  .condition-note { font-size: 11px; color: var(--muted); margin-top: 1px; }
 
-  .condition-rate {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--blue);
-  }
-
-  .condition-note {
-    font-size: 11px;
-    color: var(--muted);
-    margin-top: 1px;
-  }
-
-  /* JAPANESE SECTION */
-  .japanese-header {
-    background: var(--red);
-  }
-
-  /* POLICY NOTE */
   .policy {
     background: rgba(255,255,255,0.06);
     border-radius: var(--radius);
@@ -303,13 +275,12 @@
     border: 1px solid rgba(255,255,255,0.1);
   }
 
-  .policy strong { color: var(--yellow); font-weight: 600; }
+  .policy strong { color: var(--gold); font-weight: 600; }
 
-  /* CONTACT */
   .contact-card {
-    background: var(--yellow);
+    background: var(--gold);
     border-radius: var(--radius);
-    padding: 1.5rem 1.5rem;
+    padding: 1.5rem;
     text-align: center;
   }
 
@@ -322,16 +293,12 @@
     margin-bottom: 0.4rem;
   }
 
-  .contact-card p {
-    font-size: 14px;
-    color: rgba(26,26,46,0.7);
-    margin-bottom: 1.25rem;
-  }
+  .contact-card p { font-size: 14px; color: rgba(26,26,46,0.7); margin-bottom: 1.25rem; }
 
   .contact-link {
     display: block;
     background: var(--navy);
-    color: var(--yellow);
+    color: var(--gold);
     text-decoration: none;
     padding: 0.75rem 1rem;
     border-radius: 8px;
@@ -344,13 +311,14 @@
   .contact-link:hover { opacity: 0.85; }
   .contact-link span { opacity: 0.6; font-weight: 400; margin-right: 6px; }
 
-  /* FOOTER */
   .footer {
     text-align: center;
     padding: 0 1.25rem 2rem;
     font-size: 12px;
     color: rgba(255,255,255,0.3);
   }
+
+  .footer a { color: rgba(255,255,255,0.3); text-decoration: none; }
 </style>
 </head>
 <body>
@@ -370,22 +338,43 @@
 
 <div class="hero">
   <div class="store-name">Brass & Board</div>
-  <h1>We Buy<span>Pokémon!</span></h1>
+  <h1>
+    <span class="line1">We Buy</span>
+    <span class="line2">Magic!</span>
+    <span class="line3">Magic: The Gathering</span>
+  </h1>
   <p class="hero-sub">Cash paid on the spot &bull; No hassle &bull; Fair rates</p>
 </div>
 
 <div class="content">
 
   <div class="intro-card">
-    <p>Looking to sell your Pokémon cards? We buy singles, collections, and bulk at competitive rates. Based in the Nashville area. All prices are based on the <strong>TCGPlayer lowest verified seller</strong>.</p>
-    <p>We are fully transparent with our pricing and will walk you through every card. Reach out any time -- no appointment needed.</p>
+    <p>Looking to sell your Magic: The Gathering cards? We buy singles, collections, and bulk at competitive rates. Based in the Nashville area. All prices are based on the <strong>TCGPlayer lowest verified seller</strong>.</p>
+    <p>We are fully transparent with our pricing and will walk you through every card. Reach out any time.</p>
   </div>
 
-  <!-- BULK RATES -->
+  <!-- UNSORTED BULK -->
+  <div class="section">
+    <div class="section-header gold-header">
+      <h2>Unsorted Bulk</h2>
+      <span class="badge">All Rarities Mixed</span>
+    </div>
+    <div class="rate-table">
+      <div class="rate-row">
+        <div>
+          <div class="rate-label">Unsorted (all rarities)</div>
+          <div class="rate-sublabel">No sorting required</div>
+        </div>
+        <span class="rate-value gold">$12 / 1,000</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SORTED BULK -->
   <div class="section">
     <div class="section-header">
-      <h2>Bulk Rates</h2>
-      <span class="badge">Near Mint · Unsleeved</span>
+      <h2>Sorted Bulk Rates</h2>
+      <span class="badge">Near Mint</span>
     </div>
     <div class="rate-table">
       <div class="rate-row">
@@ -393,31 +382,43 @@
         <span class="rate-value">$12 / 1,000</span>
       </div>
       <div class="rate-row">
-        <span class="rate-label">Reverse Holo &amp; Holo Rare Bulk</span>
-        <span class="rate-value">$22 / 1,000</span>
+        <span class="rate-label">Basic Lands</span>
+        <span class="rate-value">$15 / 1,000</span>
       </div>
       <div class="rate-row">
-        <span class="rate-label">ex / V / Full Art Bulk</span>
-        <span class="rate-value">$0.30 each</span>
+        <span class="rate-label">Bulk Rares</span>
+        <span class="rate-value">$0.15 each</span>
       </div>
       <div class="rate-row">
-        <span class="rate-label">Singles $1.00 – $2.00</span>
-        <span class="rate-value">$0.50 each</span>
+        <span class="rate-label">Bulk Mythic Rares</span>
+        <span class="rate-value">$0.35 each</span>
       </div>
       <div class="rate-row">
-        <span class="rate-label">Singles $2.00 – $3.00</span>
-        <span class="rate-value">$1.00 each</span>
+        <span class="rate-label">Foil Commons &amp; Uncommons</span>
+        <span class="rate-value">$0.05 each</span>
+      </div>
+      <div class="rate-row">
+        <span class="rate-label">Foil Rares &amp; Mythics</span>
+        <span class="rate-value">$0.20 each</span>
       </div>
     </div>
   </div>
 
-  <!-- SINGLES RATES -->
+  <!-- SINGLES -->
   <div class="section">
     <div class="section-header">
       <h2>Singles Buy Rates</h2>
       <span class="badge">% of TCGPlayer Low</span>
     </div>
     <div class="rate-table">
+      <div class="rate-row">
+        <span class="rate-label">$1.00 – $2.00</span>
+        <span class="rate-value">$0.50 each</span>
+      </div>
+      <div class="rate-row">
+        <span class="rate-label">$2.00 – $3.00</span>
+        <span class="rate-value">$1.00 each</span>
+      </div>
       <div class="rate-row">
         <span class="rate-label">$3.00 – $5.00</span>
         <span class="rate-value">50%</span>
@@ -432,20 +433,7 @@
       </div>
       <div class="rate-row">
         <span class="rate-label">$100.00+</span>
-        <span class="rate-value highlight">Case by case</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- JAPANESE -->
-  <div class="section">
-    <div class="section-header japanese-header">
-      <h2>Japanese Pokémon</h2>
-    </div>
-    <div class="rate-table">
-      <div class="rate-row">
-        <span class="rate-label">All Japanese singles</span>
-        <span class="rate-value">60%</span>
+        <span class="rate-value case">Case by case</span>
       </div>
     </div>
   </div>
@@ -483,7 +471,6 @@
     <strong>Please note:</strong> We verify authenticity on all cards and reserve the right to decline any purchase. Rates are subject to change -- the rates listed here are current as of the date you received this card.
   </div>
 
-  <!-- CONTACT -->
   <div class="contact-card">
     <h2>Ready to sell?</h2>
     <p>Reach out however works best for you.</p>
@@ -495,7 +482,7 @@
 
 </div>
 
-<div class="footer">Brass & Board &bull; All prices based on TCGPlayer lowest verified seller &bull; <a href="https://www.facebook.com/brassandboard/" style="color:rgba(255,255,255,0.3);text-decoration:none;">Facebook</a> &bull; <a href="https://www.instagram.com/brassandboard/" style="color:rgba(255,255,255,0.3);text-decoration:none;">Instagram</a></div>
+<div class="footer">Brass & Board &bull; All prices based on TCGPlayer lowest verified seller &bull; <a href="https://www.facebook.com/brassandboard/">Facebook</a> &bull; <a href="https://www.instagram.com/brassandboard/">Instagram</a></div>
 
 </body>
 </html>
